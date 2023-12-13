@@ -1,0 +1,38 @@
+version: '3.1'
+
+services:
+  adminer:
+    image: adminer:4.7.7
+    restart: always
+    ports:
+      - 8083:8080
+  nginx:
+    image: nginx:latest
+    restart: always
+    volumes:
+      - ./app:/var/www/html/
+      - ./logs/nginx:/var/log/nginx
+      - ./configs/nginx/sites-available/:/etc/nginx/conf.d/
+    ports:
+     - "8001:80"
+    depends_on:
+     - php
+  db:
+    image: mariadb:latest
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: pizzasoft
+      MYSQL_DATABASE: pizzasoft
+      MYSQL_USER: pizzasoft
+      MYSQL_PASSWORD: pizzasoft
+  php:
+    restart: always
+    build: ./app
+    volumes:
+      - ./app:/var/www/html/
+      #- ./configs/php.ini:/usr/local/etc/php/php.ini
+    user: "1000:1001"
+    depends_on:
+     - db
+    ports:
+     - "9005:9000"
