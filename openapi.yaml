@@ -1,0 +1,80 @@
+openapi: "3.0.2"
+
+info:
+  title: PizzaSoft API
+  version: "1.0"
+
+servers:
+  - description: Default API pizzasoft
+
+tags:
+  - name: orders
+
+paths:
+  /orders:
+    get:
+      tags:
+        - orders
+      summary: Get all orders
+      responses:
+        "200":
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/OrderOfAll"
+        "400":
+          $ref: "#/components/responses/400NotFound"
+
+components:
+  
+  responses:
+    
+    400BadRequest:
+      description: "Bad Request"
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+            
+    404NotFound:
+      description: "Not Found"
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+
+  schemas:
+    
+    IntegerId:
+      type: integer
+      minimum: 1
+      example: 1
+      nullable: false
+      description: integer id
+    
+    OrderId:
+      type: string
+      example: '65792e3d9e3ed'
+      nullable: false
+      description: order id
+    
+    Done:
+      type: integer
+      minimum: 0
+      example: 1
+      nullable: false
+      description: done
+    
+    AllOrders:
+      type: array
+      items:
+        $ref: "#/components/schemas/OrderOfAll"
+    
+    OrderOfAll:
+      type: object
+      properties:
+        id:
+          $ref: "#/components/schemas/IntegerId"
+        order_id:
+          $ref: "#/components/schemas/OrderId"

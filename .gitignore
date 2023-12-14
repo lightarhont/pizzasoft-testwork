@@ -4,3 +4,4 @@ Pizzasoft-test.komodoproject
 index.sublime-workspace
 index.sublime-project
 .env
+app/composer.lock
