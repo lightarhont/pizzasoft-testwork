@@ -22,10 +22,15 @@ root@f450f9a6f434:/var/www/html# curl -sS https://getcomposer.org/installer | ph
 4. Нужно создать файл настроек:
 $vim app/.env
 с содержимым:
+
 DB_HOST="db"
+
 DB_NAME="pizzasoft"
+
 DB_USER="pizzasoft"
+
 DB_PASSWORD="pizzasoft"
+
 XAuthKey="qwerty123"
 
 5. Апи будет доступно по адресам начиная с http://127.0.0.1:8001/, например http://127.0.0.1:8001/orders/65792e3d9e3ed/done                                                                                                                   
