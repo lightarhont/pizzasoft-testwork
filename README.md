@@ -1,4 +1,4 @@
-Тестовое задание для ПиццаСофт:                                                                                                                                                                                                               
+Тестовое задание для ПиццаСофт( сделано по ТЗ https://docs.google.com/document/d/1eU2B1YNuiuWmeXwLOrULCmQwT3qB3yWvIc30BG0Nr34/edit#heading=h.eug6j1iuctfj ):                                                                                                                                                                                                               
                                                                                                                                                                                                                                               
 Установка:                                                                                                                                                                                                                                    
 1. Нужен докер, проект разрабатывался на "Docker version 24.0.5"
