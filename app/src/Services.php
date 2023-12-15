@@ -6,7 +6,7 @@ abstract class Service {}
 
 class ServiceOrder extends Service {
     
-    protected function _update_create(object $order, array $items)
+    protected function _update_create(object $order, array $items): array
     {
         R::begin();
         try {
@@ -33,7 +33,7 @@ class ServiceOrder extends Service {
         return $result;
     }
     
-    protected function _get_order($order_id, $done=0)
+    protected function _get_order(string $order_id, int $done=0): string
     {
         $params = [$order_id];
         if($done == 0){
@@ -63,7 +63,8 @@ class ServiceOrder extends Service {
 
 class ServiceOrderUpdate extends ServiceOrder {
     
-    private function _merge_items($order, $items_new){
+    private function _merge_items(string $order, array $items_new): array
+    {
         $items_old = [];
         foreach($order->sharedItems as $item_instance){
             $items_old[] = (int) $item_instance->id;
@@ -77,7 +78,7 @@ class ServiceOrderUpdate extends ServiceOrder {
         return $items;
     }
     
-    public function update($order_id, $items_new){
+    public function update(string $order_id, array $items_new){
         $order = $this->_get_order($order_id);
         $items = $this->_merge_items($order, $items_new);
         return $this->_update_create($order, $items);
@@ -87,7 +88,8 @@ class ServiceOrderUpdate extends ServiceOrder {
 
 class ServiceOrdersUpdateDone extends ServiceOrder {
     
-    public function update($order_id){
+    public function update(string $order_id): array
+    {
         $order = $this->_get_order($order_id);
         $order->done = 1;
         R::store($order);
@@ -136,7 +138,7 @@ class ServiceOrdersCreate extends ServiceOrder {
 }
 
 class ServiceOrdersGetOne extends ServiceOrder {
-    public function get_one($order_id): array
+    public function get_one(string $order_id): array
     {
         $order = $this->_get_order($order_id);
         $items = $this->_order_items($order);
@@ -165,7 +167,6 @@ class ServiceOrdersGetAll extends Service {
         }
         return  $result;
     }
-    
 }
 
 ?>

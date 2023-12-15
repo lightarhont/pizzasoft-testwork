@@ -6,11 +6,13 @@ abstract class Controller {
         new \Configs\Configs;
     }
     
+    //Принимает json c POST запроса
     protected function get_json(): array
     {
         return json_decode(file_get_contents('php://input'), true);
     }
     
+    //Возвращает итоговвый json который отдаст в АПИ
     protected function as_json(array $result): string
     {
         return json_encode($result);
@@ -32,7 +34,7 @@ abstract class Controller {
         return True;
     }
     
-    protected function _validator($data): array {
+    protected function _validator(array $data): array {
         $msg = 'Not valid input data';
         if(!array_key_exists('items', $data)){
             throw new \CustomExceptions\InputDataNotValid($msg);
@@ -55,7 +57,7 @@ abstract class Controller {
 }
 
 class ControllerOrderUpdate extends Controller {
-    public function post($order_id): bool
+    public function post(string $order_id): bool
     {
         $service_orders_instanse = new \Services\ServiceOrderUpdate();
         try {
@@ -104,7 +106,7 @@ class ControllerOrderCreate extends Controller {
 
 class ControllerOrderSetDone extends Controller {
     
-    public function post($order_id): bool
+    public function post(string $order_id): bool
     {
         $service_orders_instanse = new \Services\ServiceOrdersUpdateDone();
         try {
