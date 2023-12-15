@@ -57,6 +57,10 @@ abstract class Controller {
 }
 
 class ControllerOrderUpdate extends Controller {
+    
+    /*
+     *Изменяет заказ - добавляет записи к заказу
+     */
     public function post(string $order_id): bool
     {
         $service_orders_instanse = new \Services\ServiceOrderUpdate();
@@ -79,11 +83,15 @@ class ControllerOrderUpdate extends Controller {
         echo $this->as_json($response);
         return True;
     }
+    
 }
 
 
 class ControllerOrderCreate extends Controller {
     
+    /*
+     *Создаёт один заказ
+     */
     public function post(): bool
     {
         $service_orders_instanse = new \Services\ServiceOrdersCreate();
@@ -106,6 +114,9 @@ class ControllerOrderCreate extends Controller {
 
 class ControllerOrderSetDone extends Controller {
     
+    /*
+     *Изменяет заказ - меняет статус на done
+     */
     public function post(string $order_id): bool
     {
         $service_orders_instanse = new \Services\ServiceOrdersUpdateDone();
@@ -126,6 +137,9 @@ class ControllerOrderSetDone extends Controller {
 
 class ControllerOrderGetOne extends Controller {
     
+    /*
+     *Получает статус одного заказа
+     */
     public function get(string $order_id): bool
     {
         $service_orders_instanse = new \Services\ServiceOrdersGetOne();
@@ -143,6 +157,9 @@ class ControllerOrderGetOne extends Controller {
 
 class ControllerOrderGetAll extends Controller {
     
+    /*
+     *Получает список всех заказов
+     */
     public function get(): bool
     {
         if(array_key_exists('done', $_GET)){

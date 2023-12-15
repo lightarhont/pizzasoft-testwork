@@ -4,7 +4,7 @@ use \RedBeanPHP\R as R;
 
 abstract class Service {}
 
-class ServiceOrder extends Service {
+abstract class ServiceOrder extends Service {
     
     protected function _update_create(object $order, array $items): array
     {
@@ -58,6 +58,7 @@ class ServiceOrder extends Service {
         sort($items);
         return $items;
     }
+    
 }
 
 
@@ -78,6 +79,9 @@ class ServiceOrderUpdate extends ServiceOrder {
         return $items;
     }
     
+    /*
+     *Изменяет заказ - добавляет записи к заказу
+     */
     public function update(string $order_id, array $items_new){
         $order = $this->_get_order($order_id);
         $items = $this->_merge_items($order, $items_new);
@@ -88,6 +92,9 @@ class ServiceOrderUpdate extends ServiceOrder {
 
 class ServiceOrdersUpdateDone extends ServiceOrder {
     
+    /*
+     *Изменяет заказ - меняет статус на done
+     */
     public function update(string $order_id): array
     {
         $order = $this->_get_order($order_id);
@@ -130,14 +137,22 @@ class ServiceOrdersCreate extends ServiceOrder {
         return True;
     }
     
+    /*
+     *Создаёт один заказ
+     */
     public function create(array $items): array
     {
         $this->_find_items($items);
         return $this->_create($items);
     }
+    
 }
 
 class ServiceOrdersGetOne extends ServiceOrder {
+    
+    /*
+     *Получает статус одного заказа
+     */
     public function get_one(string $order_id): array
     {
         $order = $this->_get_order($order_id);
@@ -147,10 +162,14 @@ class ServiceOrdersGetOne extends ServiceOrder {
                         "done" => (bool) $order->done);
         return  $result;
     }
+    
 }
 
 class ServiceOrdersGetAll extends Service {
     
+    /*
+     *Получает список всех заказов
+     */
     public function get_all(int $done = null): array
     {
         $query_filters = 'SELECT `order_id`, `done` FROM `orders`';
