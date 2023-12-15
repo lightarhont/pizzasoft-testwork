@@ -16,6 +16,8 @@ paths:
       tags:
         - orders
       summary: Get all orders
+      parameters:
+        - $ref: "#/components/parameters/Done"
       responses:
         "200":
           description: "OK"
@@ -23,6 +25,70 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/OrderOfAll"
+        "400":
+          $ref: "#/components/responses/400NotFound"
+    post:
+      tags:
+        - orders
+      summary: Create order
+      responses:
+        "200":
+          description: "Create Order"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Order"
+        "400":
+          $ref: "#/components/responses/400NotFound"
+    
+  /orders/{order_id}/items:
+    post:
+      tags:
+        - orders
+      summary: Add items to order 
+      parameters:
+        - $ref: "#/components/schemas/OrderId"
+      responses:
+        "200":
+          description: "Add items to order"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Order"
+        "400":
+          $ref: "#/components/responses/400NotFound"
+  
+  /orders/{order_id}/done:
+    post:
+      tags:
+        - orders
+      summary: Set order to done 
+      parameters:
+        - $ref: "#/components/schemas/OrderId"
+      responses:
+        "200":
+          description: "Add items. If header X-Auth-Key: [key]"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Order"
+        "400":
+          $ref: "#/components/responses/400NotFound"
+  
+  /orders/{order_id}:
+    get:
+      tags:
+        - orders
+      summary: Get status order 
+      parameters:
+        - $ref: "#/components/schemas/OrderId"
+      responses:
+        "200":
+          description: "Set order to done. If header X-Auth-Key: [key]"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Order"
         "400":
           $ref: "#/components/responses/400NotFound"
 
@@ -78,3 +144,20 @@ components:
           $ref: "#/components/schemas/IntegerId"
         order_id:
           $ref: "#/components/schemas/OrderId"
+    
+    Order:
+      type: object
+      items:
+        id:
+          $ref: "#/components/schemas/IntegerId"
+        order_id:
+          $ref: "#/components/schemas/OrderId"
+        items:
+          $ref: "#/components/schemas/ItemIds"
+        done:
+          $ref: "#/components/schemas/Done"
+    
+    ItemIds:
+      type: array
+      items:
+        $ref: "#/components/schemas/IntegerId"
