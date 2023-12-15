@@ -144,12 +144,12 @@ class ControllerOrderGetOne extends Controller {
     {
         $service_orders_instanse = new \Services\ServiceOrdersGetOne();
         try {
-            $result = $service_orders_instanse->get_one($order_id);
+            $response = $service_orders_instanse->get_one($order_id);
         } catch (\CustomExceptions\OrderNotFound $e){
             http_response_code(400);
             $response = $e->error_response();
         } 
-        echo $this->as_json($result);
+        echo $this->as_json($response);
         return True;
     }
     
@@ -170,12 +170,12 @@ class ControllerOrderGetAll extends Controller {
         $service_orders_instanse = new \Services\ServiceOrdersGetAll();
         try {
             $this->_verify_header();
-            $result = $service_orders_instanse->get_all($done); 
+            $response = $service_orders_instanse->get_all($done); 
         } catch (\CustomExceptions\AuthenticationFailed $e){
             http_response_code(400);
             $response = $e->error_response();
         }
-        echo $this->as_json($result);
+        echo $this->as_json($response);
         return True;
     }
     

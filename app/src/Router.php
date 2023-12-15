@@ -1,7 +1,6 @@
 <?php
 
 $router->setNamespace('\Controllers');
-
 $router->post('/orders/(\w+)/items', 'ControllerOrderUpdate@post');
 $router->post('/orders', 'ControllerOrderCreate@post');
 $router->post('/orders/(\w+)/done', 'ControllerOrderSetDone@post');

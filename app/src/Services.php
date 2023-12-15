@@ -33,7 +33,7 @@ abstract class ServiceOrder extends Service {
         return $result;
     }
     
-    protected function _get_order(string $order_id, int $done=0): string
+    protected function _get_order(string $order_id, int $done=0): object
     {
         $params = [$order_id];
         if($done == 0){
@@ -64,7 +64,7 @@ abstract class ServiceOrder extends Service {
 
 class ServiceOrderUpdate extends ServiceOrder {
     
-    private function _merge_items(string $order, array $items_new): array
+    private function _merge_items(object $order, array $items_new): array
     {
         $items_old = [];
         foreach($order->sharedItems as $item_instance){
