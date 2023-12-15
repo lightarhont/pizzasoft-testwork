@@ -26,7 +26,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/OrderOfAll"
         "400":
-          $ref: "#/components/responses/400NotFound"
+          $ref: "#/components/responses/400ValidationError"
     post:
       tags:
         - orders
@@ -39,7 +39,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/Order"
         "400":
-          $ref: "#/components/responses/400NotFound"
+          $ref: "#/components/responses/400ValidationError"
     
   /orders/{order_id}/items:
     post:
@@ -56,7 +56,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/Order"
         "400":
-          $ref: "#/components/responses/400NotFound"
+          $ref: "#/components/responses/400ValidationError"
   
   /orders/{order_id}/done:
     post:
@@ -73,7 +73,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/Order"
         "400":
-          $ref: "#/components/responses/400NotFound"
+          $ref: "#/components/responses/400ValidationError"
   
   /orders/{order_id}:
     get:
@@ -90,7 +90,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/Order"
         "400":
-          $ref: "#/components/responses/400NotFound"
+          $ref: "#/components/responses/400ValidationError"
 
 components:
   
@@ -132,6 +132,18 @@ components:
       nullable: false
       description: done
     
+    ErrorCode:
+      type: string
+      example: '10'
+      nullable: false
+      description: Error code
+    
+    ErrorMessage:
+      type: string
+      example: 'HeaderKey Authentication Failed'
+      nullable: false
+      description: Error code
+    
     AllOrders:
       type: array
       items:
@@ -161,3 +173,12 @@ components:
       type: array
       items:
         $ref: "#/components/schemas/IntegerId"
+    
+    400ValidationError:
+      type: object
+      properties:
+        code:
+          $ref: "#/components/schemas/ErrorCode"
+        message:
+          $ref: "#/components/schemas/ErrorMessage"
+      
